@@ -103,6 +103,9 @@ class AdjacencyList(object):
     def remove_edge(self, edge):
         pass
 
+    def distance(self, node_1, node_2):
+        pass
+
 class AdjacencyMatrix(object):
     def __init__(self):
         # adjacency_matrix should be a two dimensions array of numbers that
@@ -128,6 +131,9 @@ class AdjacencyMatrix(object):
         pass
 
     def remove_edge(self, edge):
+        pass
+
+    def distance(self, node_1, node_2):
         pass
 
     def __get_node_index(self, node):
@@ -159,3 +165,5 @@ class ObjectOriented(object):
     def remove_edge(self, edge):
         pass
 
+    def distance(self, node_1, node_2):
+        pass
