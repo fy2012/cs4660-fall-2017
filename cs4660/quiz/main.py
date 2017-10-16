@@ -57,13 +57,13 @@ def __json_request(target_url, body):
     return response
 
 
-def bfs(node_id_a, node_id_b):
+def bfs(initial_node, dest_node):
     queue = Queue()
     graph = {}
     path = []
     got_result = False
 
-    queue.put(node_id_a)
+    queue.put(initial_node)
 
     while queue.not_empty and got_result == False:
         room_id = queue.get()
@@ -71,15 +71,15 @@ def bfs(node_id_a, node_id_b):
         for node in room_state['neighbors']:
             if node['id'] not in graph:
                 graph[node['id']] = room_id
-                if node_id_b == node['id']:
+                if dest_node == node['id']:
                     got_result = True
                     break
                 queue.put(node['id'])
 
-    current_position_id = node_id_b
+    current_position_id = dest_node
     room_state = get_state(current_position_id)
     current_room_name = room_state['location']['name'] + ' (' + current_position_id + ') HP'
-    while current_position_id != node_id_a:
+    while current_position_id != initial_node:
         room_id = graph[current_position_id]
         room_state = get_state(room_id)
         room_name = room_state['location']['name']+ ' (' + room_id + ') HP'
@@ -92,13 +92,34 @@ def bfs(node_id_a, node_id_b):
     return path
 
 
+def dijstra(initial_node, dest_node):
+    queue = []
+    path = []
+    queue.append((0, initial_node))
+    distance = []
+    distance[initial_node] = 0
+    parent = {}
+    edge = {}
+    node_passed = []
+
+    while bool(queue):
+        current_room = get_state(queue.pop()[1])
+        node_passed.append(current_room['id'])
+        neighbors = current_room['neighbors']
+
+        for i in range(len(neighbors)):
+            pass
+
+
+
+
 if __name__ == "__main__":
     # Your code starts here
 
-    node_id_a = '7f3dc077574c013d98b2de8f735058b4'
-    node_id_b = 'dadbd109410c73d838efec4867e4db57'
+    initial_node = '7f3dc077574c013d98b2de8f735058b4'
+    dest_node = 'dadbd109410c73d838efec4867e4db57'
 
-    path = bfs(node_id_a, node_id_b)
+    path = bfs(initial_node, dest_node)
 
     for value in path:
         print(value)
