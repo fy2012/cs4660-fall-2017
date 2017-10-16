@@ -12,7 +12,7 @@ TODO: implement Dijkstra utilizing the path with highest effect number
 
 import json
 import codecs
-from queue import Queue
+from queue import *
 
 # http lib import for Python 2 and 3: alternative 4
 try:
@@ -78,15 +78,15 @@ def bfs(node_id_a, node_id_b):
 
     current_position_id = node_id_b
     room_state = get_state(current_position_id)
-    current_room_name = room_state['location']['name'] + ' ID:' + current_position_id
+    current_room_name = room_state['location']['name'] + ' (' + current_position_id + ') HP'
     while current_position_id != node_id_a:
         room_id = graph[current_position_id]
         room_state = get_state(room_id)
-        room_name = room_state['location']['name']+ ' ID:' + room_id
+        room_name = room_state['location']['name']+ ' (' + room_id + ') HP'
         path.append(room_name + ':' + current_room_name + ':' + str(transition_state(room_id, current_position_id)['event']['effect']))
         current_position_id = room_id
         room_state = get_state(current_position_id)
-        current_room_name = room_state['location']['name'] + ' ID:' + current_position_id
+        current_room_name = room_state['location']['name'] + ' (' + current_position_id + ') HP'
 
     path.reverse()
     return path
@@ -102,4 +102,3 @@ if __name__ == "__main__":
 
     for value in path:
         print(value)
-
